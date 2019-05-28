@@ -14,6 +14,9 @@ from app.util import getLdMachineUser
 from app.cli.ld import LaunchDarklyApi
 from app.cli.generators import ConfigGenerator
 
+from aws_xray_sdk.core import xray_recorder
+from aws_xray_sdk.core import patch_all
+
 db = SQLAlchemy()
 migrate = Migrate()
 bootstrap =  Bootstrap()
@@ -55,6 +58,12 @@ def create_app(config_name = 'default'):
     from app.routes import core
     app.register_blueprint(core)
 
+    # AWS Xray configuration
+    xray_recorder.configure(service='SupportService')
+    plugins = ('EC2Plugin')
+    xray_recorder.configure(plugins=plugins)
+    patch_all()
+
     @app.before_request
     def setLoggingLevel():
         """Set Logging Level Based on Feature Flag
@@ -77,6 +86,8 @@ def create_app(config_name = 'default'):
         app.logger.setLevel(logLevel)
         # set werkzeug
         logging.getLogger('werkzeug').setLevel(logLevel)
+        # set xray
+        logging.getLogger('aws_xray_sdk').setLevel(logLevel)
         # set root
         logging.getLogger().setLevel(logLevel)
 
