@@ -47,8 +47,7 @@ def index():
     user['custom']['browser'] = req_headers.browser
     session["ld_user"] = user
 
-    flag_name = "trial-duration"
-    trial_duration = current_app.ldclient.variation_detail(flag_name, user, "14")
+    trial_duration = "20"
 
     start_time = time.time()
 
