@@ -21,19 +21,19 @@ class ConfigGenerator():
 
         with open('docker-compose.prod.yml', 'w+') as docker_compose_file:
             t = template.render(
-                envs = environments,
-                circle_sha1 = os.environ.get('CIRCLE_SHA1') or 'latest',
-                AWS_QUICKSIGHT_ACCESS_KEY_ID = os.environ.get('AWS_QUICKSIGHT_ACCESS_KEY_ID'), # from circle
-                AWS_QUICKSIGHT_SECRET_ACCESS_KEY_ID = os.environ.get('AWS_QUICKSIGHT_SECRET_ACCESS_KEY_ID') # from circle
+                envs=environments,
+                circle_sha1=os.environ.get('CIRCLE_SHA1') or 'latest',
+                DD_API_KEY=os.environ.get('DD_API_KEY')  # from circle
             )
             docker_compose_file.write(t)
 
-    def generate_nginx_config(self, environments):
+    def generate_nginx_config(self, domain, environments):
         """Generate Nginx Config."""
         template = self.env.get_template('nginx.conf.jinja')
 
         with open('nginx.conf', 'w+') as nginx_file:
             t = template.render(
-                envs = environments
+                domain=domain,
+                envs=environments
             )
             nginx_file.write(t)

@@ -15,12 +15,12 @@ setup(
         'flask-fixtures',
         'psycopg2-binary',
         'redis',
-        'ldclient-py',
         'gunicorn',
         'faker',
         'click',
         'click-log',
         'launchdarkly-api',
-        'boto3'
+        'boto3',
+        'j2cli'
     ]
 )
