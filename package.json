@@ -9,7 +9,7 @@
     "lodash": ">=4.17.19"
   },
   "devDependencies": {
-    "browserify": "^16.2.3",
+    "browserify": "^18.2.3",
     "uglify-js": ">=2.6.0"
   }
 }
