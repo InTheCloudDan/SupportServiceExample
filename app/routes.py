@@ -143,6 +143,9 @@ def experiments():
 @core.route("/operational")
 def operational():
     theme = request.args.get("theme")
+    dark_theme = current_app.ldclient.variation(
+        "dark-theme", user, False
+    )
     if theme:
         updateTheme(theme)
 
